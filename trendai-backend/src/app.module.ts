@@ -6,12 +6,18 @@ import { CampaignsModule } from './campaigns/campaigns.module';
 import { InfluencersModule } from './influencers/influencers.module';
 import { AuthModule } from './auth/auth.module';
 import { SubmissionsModule } from './submissions/submissions.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://domengo:domengo@cluster0.mhrzhjx.mongodb.net/trendai?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
     CampaignsModule,
     InfluencersModule,
     AuthModule,
