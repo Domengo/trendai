@@ -675,6 +675,31 @@ curl -X POST http://localhost:3000/submissions \
 -d '{"influencer": "influencerId123", "campaign": "campaignId123", "content": "https://tiktok.com/post123"}'
 ```
 
+```json
+[
+  {
+    "_id": "67a6283f19df7b461e035a12",
+    "influencer": {
+      "_id": "67a624e70dae33b16195d0bd",
+      "name": "John Doe",
+      "joinedCampaigns": [],
+      "__v": 0
+    },
+    "campaign": {
+      "_id": "67a61a593f2251ba82660dac",
+      "name": "Garage sale",
+      "status": "active",
+      "deadline": "2025-12-31T00:00:00.000Z",
+      "__v": 0
+    },
+    "content": "https://tiktok.com/post123",
+    "status": "pending",
+    "submissionDate": "2025-02-07T15:35:27.355Z",
+    "__v": 0
+  }
+]
+```
+
 #### Approve a Submission
 
 Replace :id with the actual submission ID.
