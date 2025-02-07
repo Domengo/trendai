@@ -42,7 +42,7 @@ Before running the application, ensure you have the following installed:
 
 - [MongoDB Atlas](https://www.mongodb.com/atlas/database) account or a local MongoDB instance
 
-- [Postman](https://www.postman.com/) or any API testing tool
+- [Postman](https://www.postman.com/), Curl or any API testing tool
 
 ---
 
@@ -50,22 +50,21 @@ Before running the application, ensure you have the following installed:
 
 1. Clone the repository:
 
-   git clone <https://github.com/Domengo/trendai-backend.git>
-   cd trendai-backend
+   `git clone <https://github.com/Domengo/trendai-backend.git>`
+   `cd trendai-backend`
 
 2. Install dependencies:
 
-   npm install
+   `npm install`
 
-3. Set up environment variables (see [Environment Variables](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#environment-variables)).
+3. Set up environment variables.
 
 ---
 
 ## Running the Application
 
 1. Start the development server:
-
-   npm run start
+`npm run start`
 
 2. The API will be available at:
 
@@ -77,11 +76,11 @@ Before running the application, ensure you have the following installed:
 
 Create a `.env` file in the root directory with the following variables:
 
-env
-
+``` code
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mhrzhjx.mongodb.net/trendai?retryWrites=true&w=majority&appName=Cluster0
 JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=1h
+```
 
 Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
@@ -99,21 +98,21 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Body**:
 
-  json
-
-  {
+``` json
+{
   "email": "<user@example.com>",
   "password": "password123"
-  }
+}
+```
 
 - **Response**:
 
-  json
-
+``` json
   {
-  "email": "<user@example.com>",
-  "\_id": "12345"
+    "email": "<user@example.com>",
+    "\_id": "12345"
   }
+```
 
 #### Log In an Existing User
 
@@ -123,20 +122,20 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Body**:
 
-  json
-
+```
   {
   "email": "<user@example.com>",
   "password": "password123"
   }
+```
 
 - **Response**:
 
-  json
-
+``` json
   {
   "access_token": "your-jwt-token"
   }
+```
 
 ---
 
@@ -154,16 +153,16 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Response**:
 
-  json
-
+``` json
   [
-  {
-  "_id": "12345",
-  "name": "Summer Sale",
-  "status": "active",
-  "deadline": "2023-12-31T00:00:00.000Z"
-  }
+    {
+    "_id": "12345",
+    "name": "Summer Sale",
+    "status": "active",
+    "deadline": "2023-12-31T00:00:00.000Z"
+    }
   ]
+```
 
 #### Fetch a Single Campaign
 
@@ -173,18 +172,18 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  ```Authorization: Bearer <your-jwt-token>```
 
 - **Response**:
 
-  json
-
+```
   {
-  "\_id": "12345",
-  "name": "Summer Sale",
-  "status": "active",
-  "deadline": "2023-12-31T00:00:00.000Z"
+    "\_id": "12345",
+    "name": "Summer Sale",
+    "status": "active",
+    "deadline": "2023-12-31T00:00:00.000Z"
   }
+```
 
 #### Create a Campaign
 
@@ -194,28 +193,28 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  `Authorization: Bearer <your-jwt-token>`
 
 - **Body**:
 
-  json
-
+```
   {
-  "name": "Summer Sale",
-  "status": "active",
-  "deadline": "2023-12-31"
+    "name": "Summer Sale",
+    "status": "active",
+    "deadline": "2023-12-31"
   }
+```
 
 - **Response**:
 
-  json
-
+```
   {
-  "\_id": "12345",
-  "name": "Summer Sale",
-  "status": "active",
-  "deadline": "2023-12-31T00:00:00.000Z"
+    "\_id": "12345",
+    "name": "Summer Sale",
+    "status": "active",
+    "deadline": "2023-12-31T00:00:00.000Z"
   }
+```
 
 ---
 
@@ -229,19 +228,19 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  ```Authorization: Bearer <your-jwt-token>```
 
 - **Response**:
 
-  json
-
+```
   [
-  {
-  "\_id": "12345",
-  "name": "John Doe",
-  "joinedCampaigns": []
-  }
+    {
+      "\_id": "12345",
+      "name": "John Doe",
+      "joinedCampaigns": []
+    }
   ]
+```
 
 #### Create an Influencer
 
@@ -251,26 +250,26 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  ```Authorization: Bearer <your-jwt-token>```
 
 - **Body**:
 
-  json
-
+```
   {
-  "name": "John Doe",
-  "joinedCampaigns": []
+    "name": "John Doe",
+    "joinedCampaigns": []
   }
+```
 
 - **Response**:
 
-  json
-
+```
   {
-  "\_id": "12345",
-  "name": "John Doe",
-  "joinedCampaigns": []
+    "\_id": "12345",
+    "name": "John Doe",
+    "joinedCampaigns": []
   }
+```
 
 ---
 
@@ -284,22 +283,22 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  ```Authorization: Bearer <your-jwt-token>```
 
 - **Response**:
 
-  json
-
+```
   [
-  {
-  "_id": "12345",
-  "influencer": "influencerId123",
-  "campaign": "campaignId123",
-  "content": "https://tiktok.com/post123",
-  "status": "pending",
-  "submissionDate": "2023-10-01T00:00:00.000Z"
-  }
+    {
+      "_id": "12345",
+      "influencer": "influencerId123",
+      "campaign": "campaignId123",
+      "content": "https://tiktok.com/post123",
+      "status": "pending",
+      "submissionDate": "2023-10-01T00:00:00.000Z"
+    }
   ]
+```
 
 #### Approve a Submission
 
@@ -309,16 +308,16 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Authorization: Bearer <your-jwt-token>
+  ```Authorization: Bearer <your-jwt-token>```
 
 - **Response**:
 
-  json
-
+``` json
   {
-  "\_id": "12345",
-  "status": "approved"
+    "\_id": "12345",
+    "status": "approved"
   }
+```
 
 ---
 
@@ -338,38 +337,38 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 2. **Import the Collection**:
 
-   - Save the following JSON as `trendai-postman-collection.json`:
+   - Save the following as `trendai-postman-collection`:
 
-     json
-
+``` json
      {
-     "info": {
-     "name": "TrendAI API",
-     "schema": "<https://schema.getpostman.com/json/collection/v2.1.0/collection.json>"
-     },
-     "item": [
-     {
-     "name": "Register",
-     "request": {
-     "method": "POST",
-     "header": [],
-     "body": {
-     "mode": "raw",
-     "raw": "{\n \"email\": \"user@example.com\",\n \"password\": \"password123\"\n}"
-     },
-     "url": {
-     "raw": "http://localhost:3000/auth/register",
-     "protocol": "http",
-     "host": ["localhost"],
-     "port": "3000",
-     "path": ["auth", "register"]
-     }
-     }
-     }
-     ]
-     }
+    "info": {
+      "name": "TrendAI API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Register",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:3000/auth/register",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "3000",
+            "path": ["auth", "register"]
+          }
+        }
+      }
+    ]
+  }
+```
 
-   - In Postman, click **Import** and upload the JSON file.
+- In Postman, click **Import** and upload the file.
 
 ---
 
@@ -377,27 +376,35 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 #### Register a New User
 
+``` bash
 curl -X POST <http://localhost:3000/auth/register\>
--H "Content-Type: application/json"\
+-H "Content-Type: application"\
 -d '{"email": "<user@example.com>", "password": "password123"}'
+```
 
 #### Log In an Existing User
 
+``` bash
 curl -X POST <http://localhost:3000/auth/login\>
--H "Content-Type: application/json"\
+-H "Content-Type: application"\
 -d '{"email": "<user@example.com>", "password": "password123"}'
+```
 
 #### Fetch All Campaigns
 
+``` bash
 curl -X GET <http://localhost:3000/campaigns\>
 -H "Authorization: Bearer <your-jwt-token>"
+```
 
 #### Create a Campaign
 
+``` bash
 curl -X POST <http://localhost:3000/campaigns\>
--H "Content-Type: application/json"\
+-H "Content-Type: application"\
 -H "Authorization: Bearer <your-jwt-token>"\
 -d '{"name": "Summer Sale", "status": "active", "deadline": "2023-12-31"}'
+```
 
 ---
 
