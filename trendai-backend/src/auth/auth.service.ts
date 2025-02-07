@@ -22,7 +22,10 @@ export class AuthService {
     return newUser.save();
   }
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(
+    email: string,
+    pass: string,
+  ): Promise<Partial<any> | null> {
     const user = await this.userModel.findOne({ email }).exec();
     if (user && bcrypt.compareSync(pass, user.password)) {
       const { password, ...result } = user.toObject();
@@ -31,7 +34,7 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: Partial<User>): Promise<{ access_token: string }> {
     const payload = { email: user.email, sub: user._id };
     return {
       access_token: this.jwtService.sign(payload),
