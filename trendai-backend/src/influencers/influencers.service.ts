@@ -13,7 +13,7 @@ export class InfluencersService {
     return this.influencerModel.find().populate('joinedCampaigns').exec();
   }
 
-  async findOne(id: string): Promise<Influencer> {
+  async findOne(id: string): Promise<Influencer | null> {
     return this.influencerModel.findById(id).populate('joinedCampaigns').exec();
   }
 

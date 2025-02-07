@@ -12,7 +12,7 @@ export class CampaignsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Campaign> {
+  async findOne(@Param('id') id: string): Promise<Campaign | null> {
     return this.campaignsService.findOne(id);
   }
 

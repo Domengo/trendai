@@ -13,7 +13,7 @@ export class CampaignsService {
     return this.campaignModel.find().exec();
   }
 
-  async findOne(id: string): Promise<Campaign> {
+  async findOne(id: string): Promise<Campaign | null> {
     return this.campaignModel.findById(id).exec();
   }
 
@@ -22,7 +22,7 @@ export class CampaignsService {
     return newCampaign.save();
   }
 
-  async update(id: string, campaign: Campaign): Promise<Campaign> {
+  async update(id: string, campaign: Campaign): Promise<Campaign | null> {
     return this.campaignModel
       .findByIdAndUpdate(id, campaign, { new: true })
       .exec();

@@ -12,7 +12,7 @@ export class InfluencersController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Influencer> {
+  async findOne(@Param('id') id: string): Promise<Influencer | null> {
     return this.influencersService.findOne(id);
   }
 
