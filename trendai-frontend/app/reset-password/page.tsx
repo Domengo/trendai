@@ -42,7 +42,7 @@ const ResetPassword = () => {
                 required
               />
             </div>
-            <div className="flex items-baseline justify-between">
+            <div className="flex flex-col justify-center gap-4 align-items-center">
               <button
                 type="submit"
                 className="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"

@@ -722,7 +722,7 @@ curl -X PATCH http://localhost:3000/submissions/12345/reject \
 
 ## Deployment
 
-1. Deploy the backend to a platform like [Render](https://render.com/) or [Heroku](https://www.heroku.com/).
+1. Deployed the backend to [vercel](https://vercel.com/) platform accessible through `https://trendai-backend-lime.vercel.app` .
 
 2. Update the `MONGODB_URI` in your `.env` file to point to your production database.
 
@@ -731,5 +731,3 @@ curl -X PATCH http://localhost:3000/submissions/12345/reject \
 ## Support
 
 For any issues or questions, please contact <dominicsengo@gmail.com>.
-
-curl -X POST <http://localhost:3000/submissions> -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJzdWIiOiI2N2E1Zjg5ZDczNTU0NmVkNzNhOTU1NjIiLCJpYXQiOjE3Mzg5Mzg3NzcsImV4cCI6MTczODk0MjM3N30.EZaH4GgSHQrwGIlK4wmaS-MgvMRkHpA4oGTPG8-8Mwk" -d '{"influencer": "67a624e70dae33b16195d0bd", "campaign": "67a61a593f2251ba82660dac", "content": "<https://tiktok.com/post123"}>'
