@@ -9,7 +9,7 @@ import { InfluencerSchema } from './influencer.schema';
     MongooseModule.forFeature([
       {
         schema: InfluencerSchema,
-        name: '',
+        name: 'Influencer',
       },
     ]),
   ],

@@ -9,7 +9,7 @@ import { CampaignSchema } from './campaign.schema';
     MongooseModule.forFeature([
       {
         schema: CampaignSchema,
-        name: '',
+        name: 'Campaign',
       },
     ]),
   ],

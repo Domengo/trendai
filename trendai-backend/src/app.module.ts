@@ -10,7 +10,7 @@ import { SubmissionsModule } from './submissions/submissions.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://domengo:domengo@cluster0.mhrzhjx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
+      'mongodb+srv://domengo:domengo@cluster0.mhrzhjx.mongodb.net/trendai?retryWrites=true&w=majority&appName=Cluster0',
     ),
     CampaignsModule,
     InfluencersModule,
