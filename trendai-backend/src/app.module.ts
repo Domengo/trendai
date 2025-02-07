@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CampaignsModule } from './campaigns/campaigns.module';
 import { InfluencersModule } from './influencers/influencers.module';
 import { AuthModule } from './auth/auth.module';
+import { SubmissionsModule } from './submissions/submissions.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
     CampaignsModule,
     InfluencersModule,
     AuthModule,
+    SubmissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
