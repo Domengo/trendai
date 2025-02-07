@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { InfluencersService } from './influencers.service';
 import { Influencer } from './influencer.schema';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('influencers')
+@UseGuards(JwtAuthGuard)
 export class InfluencersController {
   constructor(private readonly influencersService: InfluencersService) {}
 

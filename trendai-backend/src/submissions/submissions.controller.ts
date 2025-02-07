@@ -1,8 +1,18 @@
-import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { SubmissionsService } from './submissions.service';
 import { Submission } from './submission.schema';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('submissions')
+@UseGuards(JwtAuthGuard)
 export class SubmissionsController {
   constructor(private readonly submissionsService: SubmissionsService) {}
 
