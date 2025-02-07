@@ -339,40 +339,260 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
    - Save the following as `trendai-postman-collection`:
 
+<details>
+  <summary>Click to expand API collection</summary>
+
 ``` json
-     {
-    "info": {
-      "name": "TrendAI API",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-      {
-        "name": "Register",
-        "request": {
-          "method": "POST",
-          "header": [],
-          "body": {
-            "mode": "raw",
-            "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
-          },
-          "url": {
-            "raw": "http://localhost:3000/auth/register",
-            "protocol": "http",
-            "host": ["localhost"],
-            "port": "3000",
-            "path": ["auth", "register"]
-          }
+    {
+  "info": {
+    "name": "TrendAI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "register"]
         }
       }
-    ]
-  }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Campaigns",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/campaigns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns"]
+        }
+      }
+    },
+    {
+      "name": "Fetch Single Campaign",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/campaigns/12345",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns", "12345"]
+        }
+      }
+    },
+    {
+      "name": "Create Campaign",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Summer Sale\",\n  \"status\": \"active\",\n  \"deadline\": \"2023-12-31\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/campaigns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Influencers",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/influencers",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["influencers"]
+        }
+      }
+    },
+    {
+      "name": "Create Influencer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"joinedCampaigns\": []\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/influencers",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["influencers"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Submissions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions"]
+        }
+      }
+    },
+    {
+      "name": "Create Submission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"influencer\": \"influencerId123\",\n  \"campaign\": \"campaignId123\",\n  \"content\": \"https://tiktok.com/post123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/submissions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions"]
+        }
+      }
+    },
+    {
+      "name": "Approve Submission",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions/12345/approve",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions", "12345", "approve"]
+        }
+      }
+    },
+    {
+      "name": "Reject Submission",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions/12345/reject",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions", "12345", "reject"]
+        }
+      }
+    }
+  ]
+}
 ```
+
+</details>
 
 - In Postman, click **Import** and upload the file.
 
 ---
 
 ### Using cURL
+
+#### 1. Authentication Endpoints
 
 #### Register a New User
 
@@ -390,10 +610,21 @@ curl -X POST <http://localhost:3000/auth/login\>
 -d '{"email": "<user@example.com>", "password": "password123"}'
 ```
 
+#### 2. Campaign Endpoints
+
 #### Fetch All Campaigns
 
 ``` bash
 curl -X GET <http://localhost:3000/campaigns\>
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### Fetch a Single Campaign
+
+Replace :id with the actual campaign ID.
+
+```bash
+curl -X GET http://localhost:3000/campaigns/12345 \
 -H "Authorization: Bearer <your-jwt-token>"
 ```
 
@@ -404,6 +635,62 @@ curl -X POST <http://localhost:3000/campaigns\>
 -H "Content-Type: application"\
 -H "Authorization: Bearer <your-jwt-token>"\
 -d '{"name": "Summer Sale", "status": "active", "deadline": "2023-12-31"}'
+```
+
+#### 3. Influencer Endpoints
+
+#### Fetch All Influencers
+
+```bash
+curl -X GET http://localhost:3000/influencers \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### Create an Influencer
+
+```bash
+curl -X POST http://localhost:3000/influencers \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <your-jwt-token>" \
+-d '{"name": "John Doe", "joinedCampaigns": []}'
+```
+
+#### 4. Submission Endpoints
+
+#### Fetch All Submissions
+
+```bash
+curl -X GET http://localhost:3000/submissions \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### Create a Submission
+
+Replace influencerId123 and campaignId123 with actual IDs.
+
+```bash
+curl -X POST http://localhost:3000/submissions \
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <your-jwt-token>" \
+-d '{"influencer": "influencerId123", "campaign": "campaignId123", "content": "https://tiktok.com/post123"}'
+```
+
+#### Approve a Submission
+
+Replace :id with the actual submission ID.
+
+```bash
+curl -X PATCH http://localhost:3000/submissions/12345/approve \
+-H "Authorization: Bearer <your-jwt-token>"
+```
+
+#### Reject a Submission
+
+Replace :id with the actual submission ID.
+
+```bash
+curl -X PATCH http://localhost:3000/submissions/12345/reject \
+-H "Authorization: Bearer <your-jwt-token>"
 ```
 
 ---
@@ -419,3 +706,5 @@ curl -X POST <http://localhost:3000/campaigns\>
 ## Support
 
 For any issues or questions, please contact <dominicsengo@gmail.com>.
+
+curl -X POST <http://localhost:3000/submissions> -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJzdWIiOiI2N2E1Zjg5ZDczNTU0NmVkNzNhOTU1NjIiLCJpYXQiOjE3Mzg5Mzg3NzcsImV4cCI6MTczODk0MjM3N30.EZaH4GgSHQrwGIlK4wmaS-MgvMRkHpA4oGTPG8-8Mwk" -d '{"influencer": "67a624e70dae33b16195d0bd", "campaign": "67a61a593f2251ba82660dac", "content": "<https://tiktok.com/post123"}>'
