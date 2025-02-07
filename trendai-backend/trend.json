@@ -1,26 +1,239 @@
 {
-    "info": {
-      "name": "TrendAI API",
-      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
-      {
-        "name": "Register",
-        "request": {
-          "method": "POST",
-          "header": [],
-          "body": {
-            "mode": "raw",
-            "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
-          },
-          "url": {
-            "raw": "http://localhost:3000/auth/register",
-            "protocol": "http",
-            "host": ["localhost"],
-            "port": "3000",
-            "path": ["auth", "register"]
-          }
+  "info": {
+    "name": "TrendAI API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/register",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "register"]
         }
       }
-    ]
-  }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/auth/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Campaigns",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/campaigns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns"]
+        }
+      }
+    },
+    {
+      "name": "Fetch Single Campaign",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/campaigns/12345",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns", "12345"]
+        }
+      }
+    },
+    {
+      "name": "Create Campaign",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Summer Sale\",\n  \"status\": \"active\",\n  \"deadline\": \"2023-12-31\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/campaigns",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["campaigns"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Influencers",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/influencers",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["influencers"]
+        }
+      }
+    },
+    {
+      "name": "Create Influencer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"John Doe\",\n  \"joinedCampaigns\": []\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/influencers",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["influencers"]
+        }
+      }
+    },
+    {
+      "name": "Fetch All Submissions",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions"]
+        }
+      }
+    },
+    {
+      "name": "Create Submission",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"influencer\": \"influencerId123\",\n  \"campaign\": \"campaignId123\",\n  \"content\": \"https://tiktok.com/post123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/submissions",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions"]
+        }
+      }
+    },
+    {
+      "name": "Approve Submission",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions/12345/approve",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions", "12345", "approve"]
+        }
+      }
+    },
+    {
+      "name": "Reject Submission",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <your-jwt-token>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/submissions/12345/reject",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["submissions", "12345", "reject"]
+        }
+      }
+    }
+  ]
+}
