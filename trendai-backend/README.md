@@ -50,18 +50,10 @@ Before running the application, ensure you have the following installed:
 
 1. Clone the repository:
 
-   bash
-
-   Copy
-
    git clone <https://github.com/your-username/trendai-backend.git>
    cd trendai-backend
 
 2. Install dependencies:
-
-   bash
-
-   Copy
 
    npm install
 
@@ -73,15 +65,9 @@ Before running the application, ensure you have the following installed:
 
 1. Start the development server:
 
-   bash
-
-   Copy
-
    npm run start
 
 2. The API will be available at:
-
-   Copy
 
    <http://localhost:3000>
 
@@ -92,8 +78,6 @@ Before running the application, ensure you have the following installed:
 Create a `.env` file in the root directory with the following variables:
 
 env
-
-Copy
 
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mhrzhjx.mongodb.net/trendai?retryWrites=true&w=majority&appName=Cluster0
 JWT_SECRET=your-secret-key
@@ -117,8 +101,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
   json
 
-  Copy
-
   {
   "email": "<user@example.com>",
   "password": "password123"
@@ -127,8 +109,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 - **Response**:
 
   json
-
-  Copy
 
   {
   "email": "<user@example.com>",
@@ -145,8 +125,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
   json
 
-  Copy
-
   {
   "email": "<user@example.com>",
   "password": "password123"
@@ -155,8 +133,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 - **Response**:
 
   json
-
-  Copy
 
   {
   "access_token": "your-jwt-token"
@@ -174,15 +150,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Response**:
 
   json
-
-  Copy
 
   [
   {
@@ -201,15 +173,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Response**:
 
   json
-
-  Copy
 
   {
   "\_id": "12345",
@@ -226,15 +194,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Body**:
 
   json
-
-  Copy
 
   {
   "name": "Summer Sale",
@@ -245,8 +209,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 - **Response**:
 
   json
-
-  Copy
 
   {
   "\_id": "12345",
@@ -267,15 +229,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Response**:
 
   json
-
-  Copy
 
   [
   {
@@ -293,15 +251,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Body**:
 
   json
-
-  Copy
 
   {
   "name": "John Doe",
@@ -311,8 +265,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 - **Response**:
 
   json
-
-  Copy
 
   {
   "\_id": "12345",
@@ -332,15 +284,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Response**:
 
   json
-
-  Copy
 
   [
   {
@@ -361,15 +309,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 - **Headers**:
 
-  Copy
-
   Authorization: Bearer <your-jwt-token>
 
 - **Response**:
 
   json
-
-  Copy
 
   {
   "\_id": "12345",
@@ -397,8 +341,6 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
    - Save the following JSON as `trendai-postman-collection.json`:
 
      json
-
-     Copy
 
      {
      "info": {
@@ -435,19 +377,11 @@ Replace `<username>` and `<password>` with your MongoDB Atlas credentials.
 
 #### Register a New User
 
-bash
-
-Copy
-
 curl -X POST <http://localhost:3000/auth/register\>
 -H "Content-Type: application/json"\
 -d '{"email": "<user@example.com>", "password": "password123"}'
 
 #### Log In an Existing User
-
-bash
-
-Copy
 
 curl -X POST <http://localhost:3000/auth/login\>
 -H "Content-Type: application/json"\
@@ -455,18 +389,10 @@ curl -X POST <http://localhost:3000/auth/login\>
 
 #### Fetch All Campaigns
 
-bash
-
-Copy
-
 curl -X GET <http://localhost:3000/campaigns\>
 -H "Authorization: Bearer <your-jwt-token>"
 
 #### Create a Campaign
-
-bash
-
-Copy
 
 curl -X POST <http://localhost:3000/campaigns\>
 -H "Content-Type: application/json"\
