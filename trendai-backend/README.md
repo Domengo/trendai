@@ -50,7 +50,7 @@ Before running the application, ensure you have the following installed:
 
 1. Clone the repository:
 
-   git clone <https://github.com/your-username/trendai-backend.git>
+   git clone <https://github.com/Domengo/trendai-backend.git>
    cd trendai-backend
 
 2. Install dependencies:
