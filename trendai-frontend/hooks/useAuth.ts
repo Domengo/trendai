@@ -20,6 +20,9 @@ export const useAuth = () => {
       const decodedToken: any = jwtDecode(storedToken)
       const currentTime = Date.now() / 1000
 
+      console.log("Decoded Token:", decodedToken);
+      console.log("Current Time:", currentTime);
+
       if (decodedToken.exp < currentTime) {
         logout()
         toast.error("Your session has expired. Please log in again.")
@@ -61,7 +64,8 @@ export const useAuth = () => {
     router.push("/login")
     toast.success("Logged out successfully!")
   }
-
+  console.log("Token in useAuth hook:", token);
+  
   return { token, login, logout, isLoading, checkToken }
 }
 

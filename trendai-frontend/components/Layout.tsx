@@ -1,46 +1,51 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
-import { Sun, Moon, Menu } from "lucide-react"
-import { useTheme } from "next-themes"
-import { useAuth } from "@/hooks/useAuth"
-import UserNav from "./UserNav"
-import toast from "react-hot-toast"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Sun, Moon, Menu } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useAuth } from "@/hooks/useAuth";
+import UserNav from "./UserNav";
+import toast from "react-hot-toast";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const pathname = usePathname()
-  const { token, logout } = useAuth()
-  const router = useRouter()
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const { token, logout } = useAuth();
+  const router = useRouter();
 
-  useEffect(() => setMounted(true), [])
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (!token && pathname !== "/login" && pathname !== "/register") {
-      router.push("/login")
-      toast.error("Please log in to access this page")
+      router.push("/login");
+      toast.error("Please log in to access this page");
     }
-  }, [token, pathname, router])
+    console.log("Token from useAuth hook:", token);
+    console.log("Pathname:", pathname);
+  }, [token, pathname, router]);
 
   const navigation = [
     { name: "Dashboard", href: "/" },
     { name: "Campaigns", href: "/campaigns" },
     { name: "Influencers", href: "/influencers" },
     { name: "Submissions", href: "/submissions" },
-  ]
+  ];
 
   if (!token) {
-    return <>{children}</>
+    return <>{children}</>;
   }
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <aside className="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
         <div className="py-4 text-gray-500 dark:text-gray-400">
-          <Link href="/" className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200">
+          <Link
+            href="/"
+            className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
+          >
             TrendAI
           </Link>
           <ul className="mt-6">
@@ -49,7 +54,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <Link
                   href={item.href}
                   className={`inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 ${
-                    pathname === item.href ? "text-gray-800 dark:text-gray-100" : "text-gray-600 dark:text-gray-400"
+                    pathname === item.href
+                      ? "text-gray-800 dark:text-gray-100"
+                      : "text-gray-600 dark:text-gray-400"
                   }`}
                 >
                   {item.name}
@@ -85,7 +92,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                   aria-label="Toggle color mode"
                 >
-                  {mounted && (theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />)}
+                  {mounted &&
+                    (theme === "dark" ? (
+                      <Sun className="w-5 h-5" />
+                    ) : (
+                      <Moon className="w-5 h-5" />
+                    ))}
                 </button>
               </li>
               <li className="flex">
@@ -99,8 +111,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
-
+export default Layout;
