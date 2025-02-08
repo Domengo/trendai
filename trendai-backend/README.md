@@ -6,31 +6,31 @@ This is the backend API for the TrendAI platform, built with **Nest.js**, **Mo
 
 ## Table of Contents
 
-1. [Prerequisites](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#prerequisites)
+1. [Prerequisites](#prerequisites)
 
-2. [Setup](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#setup)
+2. [Setup](#setup)
 
-3. [Running the Application](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#running-the-application)
+3. [Running the Application](#running-the-application)
 
-4. [Environment Variables](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#environment-variables)
+4. [Environment Variables](#environment-variables)
 
-5. [API Endpoints](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#api-endpoints)
+5. [API Endpoints](#api-endpoints)
 
-   - [Authentication](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#authentication)
+   - [Authentication](#authentication)
 
-   - [Campaigns](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#campaigns)
+   - [Campaigns](#campaigns)
 
-   - [Influencers](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#influencers)
+   - [Influencers](#influencers)
 
-   - [Submissions](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#submissions)
+   - [Submissions](#submissions)
 
-6. [Testing the API](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#testing-the-api)
+6. [Testing the API](#testing-the-api)
 
-   - [Using Postman](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#using-postman)
+   - [Using Postman](#using-postman)
 
-   - [Using cURL](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#using-curl)
+   - [Using cURL](#using-curl)
 
-7. [Deployment](https://chat.deepseek.com/a/chat/s/e52959fe-3b86-428d-a658-4a663885c018#deployment)
+7. [Deployment](#deployment)
 
 ---
 
