@@ -1,38 +1,58 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
-import {jwtDecode} from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 import toast from "react-hot-toast"
 
 export const useAuth = () => {
   const [token, setToken] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  useEffect(() => {
-    const storedToken = localStorage.getItem("token")
-    if (storedToken) {
-      try {
-        const decodedToken: any = jwtDecode(storedToken)
-        const currentTime = Date.now() / 1000
-        if (decodedToken.exp < currentTime) {
-          logout()
-          toast.error("Your session has expired. Please log in again.")
-        } else {
-          setToken(storedToken)
-        }
-      } catch (error) {
-        console.error("Error decoding token:", error)
-        logout()
-        toast.error("There was an issue with your session. Please log in again.")
+  const checkToken = useCallback(() => {
+    try {
+      const storedToken = localStorage.getItem("token")
+      if (!storedToken) {
+        setIsLoading(false)
+        return
       }
+      const decodedToken: any = jwtDecode(storedToken)
+      const currentTime = Date.now() / 1000
+
+      if (decodedToken.exp < currentTime) {
+        logout()
+        toast.error("Your session has expired. Please log in again.")
+        return false
+      } else {
+        setToken(storedToken)
+        setIsLoading(false)
+        return true
+      }
+    } catch (error) {
+      console.error("Error checking token:", error)
+      logout()
+      toast.error("There was an issue with your session. Please log in again.")
+      setIsLoading(false)
+      return false
     }
   }, [])
 
+  useEffect(() => {
+    checkToken()
+  }, [checkToken])
+
   const login = (newToken: string) => {
-    localStorage.setItem("token", newToken)
-    setToken(newToken)
-    toast.success("Logged in successfully!")
+    try {
+      localStorage.setItem("token", newToken)
+      setToken(newToken)
+      toast.success("Logged in successfully!")
+      router.push("/campaigns")
+    } catch (error) {
+      console.error("Error logging in:", error)
+      toast.error("Failed to log in. Please try again.")
+      return false
+    }
   }
 
   const logout = () => {
@@ -42,6 +62,6 @@ export const useAuth = () => {
     toast.success("Logged out successfully!")
   }
 
-  return { token, login, logout }
+  return { token, login, logout, isLoading, checkToken }
 }
 
