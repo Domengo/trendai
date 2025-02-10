@@ -26,7 +26,7 @@ export default function DashboardLayout({
 
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} />
       <div className="flex flex-col flex-1 w-full">
         <Navbar toggleSidebar={toggleSidebar} />
         <main className="h-full overflow-y-auto">
