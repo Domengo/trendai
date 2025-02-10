@@ -1,28 +1,28 @@
-"use client"
+"use client";
 
-import { useQuery } from "react-query"
-import api from "@/utils/api"
-import { Loader } from "lucide-react"
+import { useQuery } from "react-query";
+import api from "@/lib/api";
+import { Loader } from "lucide-react";
 
 const Dashboard = () => {
   const { data: campaigns, isLoading: campaignsLoading } = useQuery("campaigns", () =>
     api.get("/campaigns").then((res) => res.data),
-  )
+  );
 
   const { data: influencers, isLoading: influencersLoading } = useQuery("influencers", () =>
     api.get("/influencers").then((res) => res.data),
-  )
+  );
 
   const { data: submissions, isLoading: submissionsLoading } = useQuery("submissions", () =>
     api.get("/submissions").then((res) => res.data),
-  )
+  );
 
   if (campaignsLoading || influencersLoading || submissionsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <Loader className="w-8 h-8 animate-spin" />
       </div>
-    )
+    );
   }
 
   return (
@@ -84,8 +84,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
-
+export default Dashboard;

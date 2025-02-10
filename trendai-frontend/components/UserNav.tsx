@@ -1,33 +1,33 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { useAuth } from "@/hooks/useAuth"
-import { User, LogOut, Settings } from "lucide-react"
-import Link from "next/link"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
+import { User, LogOut, Settings } from "lucide-react";
+import Link from "next/link";
 
-const UserNav = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const { logout } = useAuth()
-  const router = useRouter()
+export default function UserNav() {
+  const [isOpen, setIsOpen] = useState(false);
+  const { logout } = useAuth();
+  const router = useRouter();
 
   const handleLogout = () => {
-    logout()
-    router.push("/login")
-  }
+    logout();
+    router.push("/login");
+  };
 
   useEffect(() => {
-    const closeDropdown = () => setIsOpen(false)
-    window.addEventListener("click", closeDropdown)
-    return () => window.removeEventListener("click", closeDropdown)
-  }, [])
+    const closeDropdown = () => setIsOpen(false);
+    window.addEventListener("click", closeDropdown);
+    return () => window.removeEventListener("click", closeDropdown);
+  }, []);
 
   return (
     <div className="relative">
       <button
         onClick={(e) => {
-          e.stopPropagation()
-          setIsOpen(!isOpen)
+          e.stopPropagation();
+          setIsOpen(!isOpen);
         }}
         className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-200"
       >
@@ -53,8 +53,5 @@ const UserNav = () => {
         </div>
       )}
     </div>
-  )
+  );
 }
-
-export default UserNav
-
