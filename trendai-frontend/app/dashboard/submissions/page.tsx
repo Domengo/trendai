@@ -60,6 +60,7 @@ import { Loader, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateSubmissionModal from "@/components/CreateSubmissionModal";
+import { useQueryClient } from "react-query";
 
 export default function SubmissionsTable() {
   const {
@@ -73,6 +74,7 @@ export default function SubmissionsTable() {
   });
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const queryClient = useQueryClient();
 
   if (isLoading) {
     return (
@@ -89,6 +91,26 @@ export default function SubmissionsTable() {
       </div>
     );
   }
+
+  const handleApprove = async (submissionId: string) => {
+    try {
+      await api.patch(`/submissions/${submissionId}/approve`);
+      toast.success("Submission approved!");
+      queryClient.invalidateQueries("submissions"); // Refresh the table
+    } catch (error) {
+      toast.error("Failed to approve submission. Please try again.");
+    }
+  };
+  
+  const handleReject = async (submissionId: string) => {
+    try {
+      await api.patch(`/submissions/${submissionId}/reject`);
+      toast.success("Submission rejected!");
+      queryClient.invalidateQueries("submissions"); // Refresh the table
+    } catch (error) {
+      toast.error("Failed to reject submission. Please try again.");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -165,6 +187,24 @@ export default function SubmissionsTable() {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
+                      {submission.status === "pending" && (
+                        <>
+                          <button
+                            onClick={() => handleApprove(submission._id)}
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() => handleReject(submission._id)}
+                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

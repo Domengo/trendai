@@ -90,6 +90,7 @@ import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
+import { useQueryClient } from "react-query";
 
 export default function CreateSubmissionModal({
   isOpen,
@@ -104,6 +105,7 @@ export default function CreateSubmissionModal({
   const [campaignId, setCampaignId] = useState("");
   const [content, setContent] = useState("");
   const [status, setStatus] = useState("pending");
+const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -113,6 +115,7 @@ export default function CreateSubmissionModal({
         setInfluencers(influencersResponse.data);
         setCampaigns(campaignsResponse.data);
       } catch (error) {
+        console.error(error);
         toast.error("Failed to fetch data. Please try again.");
       }
     };
@@ -129,8 +132,10 @@ export default function CreateSubmissionModal({
         status,
       });
       toast.success("Submission created successfully!");
+      queryClient.invalidateQueries("submissions");
       onClose();
     } catch (error) {
+      console.error(error);
       toast.error("Failed to create submission. Please try again.");
     }
   };

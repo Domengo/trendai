@@ -4,6 +4,7 @@ import { useState } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
+import { useQueryClient } from "react-query";
 
 export default function CreateCampaignModal({
   isOpen,
@@ -15,7 +16,7 @@ export default function CreateCampaignModal({
   const [name, setName] = useState("");
   const [status, setStatus] = useState("active");
   const [deadline, setDeadline] = useState("");
-
+const queryClient = useQueryClient();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -25,6 +26,7 @@ export default function CreateCampaignModal({
         deadline,
       });
       toast.success("Campaign created successfully!");
+      queryClient.invalidateQueries("campaigns");
       onClose();
     } catch (error) {
       console.error(error);
