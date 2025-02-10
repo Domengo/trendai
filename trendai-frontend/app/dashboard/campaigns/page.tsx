@@ -35,7 +35,7 @@ export default function Campaigns() {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-8">
+    <div className="container mx-auto px-4 sm:px-8 mt-4">
       <div className="py-8">
         <div className="flex justify-between">
           <h2 className="text-2xl font-semibold leading-tight">Campaigns</h2>
