@@ -1,6 +1,14 @@
 "use client";
 
-export default function Table({ data, columns }: { data: any[]; columns: string[] }) {
+export default function Table({
+  data,
+  columns,
+  renderActions,
+}: {
+  data: any[];
+  columns: string[];
+  renderActions?: (item: any) => React.ReactNode;
+}) {
   // Helper function to format the date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -18,10 +26,15 @@ export default function Table({ data, columns }: { data: any[]; columns: string[
     const value = item[column.toLowerCase()];
 
     // Handle dates (e.g., deadline, submissionDate)
-    if (column.toLowerCase() === "deadline" || column.toLowerCase() === "submissiondate") {
+    if (
+      column.toLowerCase() === "deadline" ||
+      column.toLowerCase() === "submissiondate"
+    ) {
       return formatDate(value);
     }
-
+    if (column === "Actions") {
+      return renderActions ? renderActions(item) : null
+    }
     // Default case
     return value;
   };

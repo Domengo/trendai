@@ -7,6 +7,8 @@ import Table from "@/components/Table";
 import toast from "react-hot-toast";
 import CreateCampaignModal from "@/components/CreateCampaignModal";
 import { useState } from "react";
+import EditCampaignModal from "@/components/EditCampaignModal";
+import { useQueryClient } from "react-query";
 
 export default function Campaigns() {
   const {
@@ -24,6 +26,21 @@ export default function Campaigns() {
   );
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const [selectedCampaignId, setSelectedCampaignId] = useState<string | null>(
+    null
+  );
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleDeleteCampaign = async (campaignId: string) => {
+    try {
+      await api.delete(`/campaigns/${campaignId}`);
+      toast.success("Campaign deleted successfully!");
+      queryClient.invalidateQueries("campaigns");
+    } catch (error) {
+      toast.error("Failed to delete campaign.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -56,11 +73,41 @@ export default function Campaigns() {
             <span>New Campaign</span>
           </button>
         </div>
-        <Table data={campaigns} columns={["Name", "Status", "Deadline"]} />
+        <Table
+          data={campaigns}
+          columns={["Name", "Status", "Deadline", "Actions"]}
+          renderActions={(item) => (
+            <>
+              <button
+                onClick={() => {
+                  setSelectedCampaignId(item._id);
+                  setIsEditModalOpen(true);
+                }}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteCampaign(item._id)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Delete
+              </button>
+            </>
+          )}
+        />
       </div>
       <CreateCampaignModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+      />
+      <EditCampaignModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedCampaignId(null);
+        }}
+        campaignId={selectedCampaignId || ""}
       />
     </div>
   );

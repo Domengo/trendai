@@ -7,6 +7,8 @@ import Table from "@/components/Table";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateInfluencerModal from "@/components/CreateInfluencerModal";
+import EditInfluencerModal from "@/components/EditInfluencerModal";
+import { useQueryClient } from "react-query";
 
 export default function Influencers() {
   const {
@@ -24,6 +26,21 @@ export default function Influencers() {
   );
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const [selectedInfluencerId, setSelectedInfluencerId] = useState<
+    string | null
+  >(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleDeleteInfluencer = async (influencerId: string) => {
+    try {
+      await api.delete(`/influencers/${influencerId}`);
+      toast.success("Influencer deleted successfully!");
+      queryClient.invalidateQueries("influencers");
+    } catch (error) {
+      toast.error("Failed to delete influencer.");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -56,11 +73,41 @@ export default function Influencers() {
             <span>New Influencer</span>
           </button>
         </div>
-        <Table data={influencers} columns={["Name", "Joined Campaigns"]} />
+        <Table
+          data={influencers}
+          columns={["Name", "Joined Campaigns", "Actions"]}
+          renderActions={(item) => (
+            <>
+              <button
+                onClick={() => {
+                  setSelectedInfluencerId(item._id);
+                  setIsEditModalOpen(true);
+                }}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteInfluencer(item._id)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Delete
+              </button>
+            </>
+          )}
+        />
       </div>
       <CreateInfluencerModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+      />
+      <EditInfluencerModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedInfluencerId(null);
+        }}
+        influencerId={selectedInfluencerId || ""}
       />
     </div>
   );

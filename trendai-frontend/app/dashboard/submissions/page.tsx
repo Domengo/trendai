@@ -61,20 +61,42 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateSubmissionModal from "@/components/CreateSubmissionModal";
 import { useQueryClient } from "react-query";
+import EditSubmissionModal from "@/components/EditSubmissionModal";
 
 export default function SubmissionsTable() {
   const {
     data: submissions,
     isLoading,
     error,
-  } = useQuery("submissions", () => api.get("/submissions").then((res) => res.data), {
-    onError: () => {
-      toast.error("Failed to load submissions. Please try again.");
-    },
-  });
+  } = useQuery(
+    "submissions",
+    () => api.get("/submissions").then((res) => res.data),
+    {
+      onError: () => {
+        toast.error("Failed to load submissions. Please try again.");
+      },
+    }
+  );
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleEditSubmission = (submissionId: string) => {
+    setSelectedSubmissionId(submissionId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDeleteSubmission = async (submissionId: string) => {
+    try {
+      await api.delete(`/submissions/${submissionId}`);
+      toast.success("Submission deleted!");
+      queryClient.invalidateQueries("submissions");
+    } catch (error) {
+      toast.error("Deletion failed");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -87,7 +109,9 @@ export default function SubmissionsTable() {
   if (error) {
     return (
       <div className="flex items-center justify-center h-full">
-        <p className="text-red-500">Error loading submissions. Please try again.</p>
+        <p className="text-red-500">
+          Error loading submissions. Please try again.
+        </p>
       </div>
     );
   }
@@ -101,7 +125,7 @@ export default function SubmissionsTable() {
       toast.error("Failed to approve submission. Please try again.");
     }
   };
-  
+
   const handleReject = async (submissionId: string) => {
     try {
       await api.patch(`/submissions/${submissionId}/reject`);
@@ -145,6 +169,12 @@ export default function SubmissionsTable() {
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
                     Submission Date
                   </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+                    
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -180,13 +210,16 @@ export default function SubmissionsTable() {
                       </span>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
-                      {new Date(submission.submissionDate).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
+                      {new Date(submission.submissionDate).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
                       {submission.status === "pending" && (
@@ -206,6 +239,20 @@ export default function SubmissionsTable() {
                         </>
                       )}
                     </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
+                      <button
+                        onClick={() => handleEditSubmission(submission._id)}
+                        className="text-blue-500 hover:text-blue-700"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => handleDeleteSubmission(submission._id)}
+                        className="text-red-500 hover:text-red-700 ml-2"
+                      >
+                        🗑️
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -216,6 +263,14 @@ export default function SubmissionsTable() {
       <CreateSubmissionModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+      />
+      <EditSubmissionModal
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setSelectedSubmissionId(null);
+        }}
+        submissionId={selectedSubmissionId || ""}
       />
     </div>
   );
