@@ -30,6 +30,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email }).exec();
     await Promise.resolve();
     if (user && bcrypt.compareSync(pass, user.password)) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user.toObject();
       return result;
     }

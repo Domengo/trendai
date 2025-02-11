@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
@@ -10,7 +11,7 @@ async function bootstrap() {
   ];
 
   app.enableCors({
-    origin: (origin, callback) => {
+    origin: (origin: string | undefined, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, origin);
       } else {
@@ -27,6 +28,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   process.on('unhandledRejection', (reason, promise) => {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-base-to-string
     logger.error(`Unhandled Rejection at: ${promise}, reason: ${reason}`);
   });
 
@@ -36,6 +38,6 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap().catch((error: any) => {
+bootstrap().catch((error: Error) => {
   Logger.error(`Error starting server: ${error.message}`);
 });
