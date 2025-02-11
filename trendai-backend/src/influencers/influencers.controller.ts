@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Patch,
+  Delete,
+} from '@nestjs/common';
 import { InfluencersService } from './influencers.service';
 import { Influencer } from './influencer.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -21,5 +30,18 @@ export class InfluencersController {
   @Post()
   async create(@Body() influencer: Influencer): Promise<Influencer> {
     return this.influencersService.create(influencer);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() influencer: Partial<Influencer>,
+  ): Promise<Influencer | null> {
+    return await this.influencersService.update(id, influencer);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<void> {
+    await this.influencersService.delete(id);
   }
 }

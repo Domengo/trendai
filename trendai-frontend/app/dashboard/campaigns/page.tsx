@@ -38,7 +38,10 @@ export default function Campaigns() {
       toast.success("Campaign deleted successfully!");
       queryClient.invalidateQueries("campaigns");
     } catch (error) {
-      toast.error("Failed to delete campaign.");
+      if (error){
+        toast.error("Failed to delete campaign.");
+      }
+      
     }
   };
 

@@ -38,7 +38,10 @@ export default function Influencers() {
       toast.success("Influencer deleted successfully!");
       queryClient.invalidateQueries("influencers");
     } catch (error) {
-      toast.error("Failed to delete influencer.");
+      if (error){
+        toast.error("Failed to delete influencer.");
+      }
+      
     }
   };
 

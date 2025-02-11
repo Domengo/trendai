@@ -27,4 +27,21 @@ export class CampaignsService {
       .findByIdAndUpdate(id, campaign, { new: true })
       .exec();
   }
+
+  async delete(id: string): Promise<void> {
+    await this.campaignModel.findByIdAndDelete(id).exec();
+  }
+
+  async addProductToCampaign(
+    campaignId: string,
+    productId: string,
+  ): Promise<Campaign | null> {
+    return this.campaignModel
+      .findByIdAndUpdate(
+        campaignId,
+        { $push: { products: productId } },
+        { new: true },
+      )
+      .exec();
+  }
 }

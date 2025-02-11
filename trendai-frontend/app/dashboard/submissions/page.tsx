@@ -80,7 +80,9 @@ export default function SubmissionsTable() {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
-  const [selectedSubmissionId, setSelectedSubmissionId] = useState<string | null>(null);
+  const [selectedSubmissionId, setSelectedSubmissionId] = useState<
+    string | null
+  >(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleEditSubmission = (submissionId: string) => {
@@ -94,7 +96,9 @@ export default function SubmissionsTable() {
       toast.success("Submission deleted!");
       queryClient.invalidateQueries("submissions");
     } catch (error) {
-      toast.error("Deletion failed");
+      if (error) {
+        toast.error("Deletion failed");
+      }
     }
   };
 
@@ -122,7 +126,9 @@ export default function SubmissionsTable() {
       toast.success("Submission approved!");
       queryClient.invalidateQueries("submissions"); // Refresh the table
     } catch (error) {
-      toast.error("Failed to approve submission. Please try again.");
+      if (error) {
+        toast.error("Failed to approve submission. Please try again.");
+      }
     }
   };
 
@@ -132,7 +138,9 @@ export default function SubmissionsTable() {
       toast.success("Submission rejected!");
       queryClient.invalidateQueries("submissions"); // Refresh the table
     } catch (error) {
-      toast.error("Failed to reject submission. Please try again.");
+      if (error) {
+        toast.error("Failed to reject submission. Please try again.");
+      }
     }
   };
 
@@ -169,9 +177,7 @@ export default function SubmissionsTable() {
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
                     Submission Date
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
-                    
-                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider"></th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 dark:bg-gray-800 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase tracking-wider">
                     Actions
                   </th>

@@ -15,6 +15,7 @@ export class AuthService {
 
   async register(createUserDto: CreateUserDto): Promise<User> {
     const hashedPassword = bcrypt.hashSync(createUserDto.password, 10);
+    await Promise.resolve();
     const newUser = new this.userModel({
       email: createUserDto.email,
       password: hashedPassword,
@@ -27,6 +28,7 @@ export class AuthService {
     pass: string,
   ): Promise<Partial<any> | null> {
     const user = await this.userModel.findOne({ email }).exec();
+    await Promise.resolve();
     if (user && bcrypt.compareSync(pass, user.password)) {
       const { password, ...result } = user.toObject();
       return result;
@@ -36,8 +38,22 @@ export class AuthService {
 
   async login(user: Partial<User>): Promise<{ access_token: string }> {
     const payload = { email: user.email, sub: user._id };
+    await Promise.resolve();
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async findAllUsers(): Promise<User[]> {
+    return this.userModel.find().select('-password').exec();
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await this.userModel.findByIdAndDelete(id).exec();
+  }
+
+  async findOne(email: string): Promise<User | undefined> {
+    const user = await this.userModel.findOne({ email }).exec();
+    return user || undefined;
   }
 }

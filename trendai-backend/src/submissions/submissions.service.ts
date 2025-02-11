@@ -25,6 +25,12 @@ export class SubmissionsService {
     return newSubmission.save();
   }
 
+  // async update(id: string, submission: Submission): Promise<Submission | null> {
+  //   return this.submissionModel
+  //     .findByIdAndUpdate(id, submission, { new: true })
+  //     .exec();
+  // }
+
   async updateStatus(
     id: string,
     status: 'approved' | 'rejected',

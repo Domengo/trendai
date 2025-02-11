@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SubmissionsController } from './submissions.controller';
 import { SubmissionsService } from './submissions.service';
-import { Submission, SubmissionSchema } from './submission.schema';
+import { SubmissionSchema } from './submission.schema';
 
 @Module({
   imports: [

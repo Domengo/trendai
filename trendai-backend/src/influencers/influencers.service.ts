@@ -21,4 +21,18 @@ export class InfluencersService {
     const newInfluencer = new this.influencerModel(influencer);
     return newInfluencer.save();
   }
+
+  async update(
+    id: string,
+    influencer: Partial<Influencer>,
+  ): Promise<Influencer | null> {
+    return this.influencerModel
+      .findByIdAndUpdate(id, influencer, { new: true })
+      .populate('joinedCampaigns')
+      .exec();
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.influencerModel.findByIdAndDelete(id).exec();
+  }
 }
