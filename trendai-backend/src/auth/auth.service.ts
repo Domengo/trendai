@@ -19,6 +19,7 @@ export class AuthService {
     const newUser = new this.userModel({
       email: createUserDto.email,
       password: hashedPassword,
+      name: createUserDto.name,
     });
     return newUser.save();
   }

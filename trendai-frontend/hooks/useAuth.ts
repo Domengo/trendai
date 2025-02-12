@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
 import api from "@/lib/api";
+import { JwtPayload } from "@/types";
 
 export const useAuth = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -18,11 +19,11 @@ export const useAuth = () => {
         setIsLoading(false);
         return;
       }
-      const decodedToken: any = jwtDecode(storedToken);
+      const decodedToken: JwtPayload = jwtDecode(storedToken);
       const currentTime = Date.now() / 1000;
 
       console.log("Decoded Token:", decodedToken);
-      console.log("Current Time:", currentTime);
+      console.log("Current Time:", new Date(currentTime * 1000).toLocaleString());
 
       if (decodedToken.exp < currentTime) {
         logout();
@@ -60,7 +61,7 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (credentials: { email: string; password: string }) => {
+  const register = async (credentials: {name: string, email: string; password: string }) => {
     try {
       await api.post("/auth/register", credentials);
       toast.success("Registered successfully! Please log in.");

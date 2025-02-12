@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
 import { useQueryClient } from "react-query";
+import { Loader } from "lucide-react";
 
 export default function CreateCampaignModal({
   isOpen,
@@ -16,9 +17,13 @@ export default function CreateCampaignModal({
   const [name, setName] = useState("");
   const [status, setStatus] = useState("active");
   const [deadline, setDeadline] = useState("");
-const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const queryClient = useQueryClient();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await api.post("/campaigns", {
         name,
@@ -31,6 +36,8 @@ const queryClient = useQueryClient();
     } catch (error) {
       console.error(error);
       toast.error("Failed to create campaign. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,9 +86,17 @@ const queryClient = useQueryClient();
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 disabled:opacity-50"
           >
-            Create
+            {isLoading ? (
+              <>
+                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                Creating Campaign...
+              </>
+            ) : (
+              "Create"
+            )}
           </button>
         </div>
       </form>

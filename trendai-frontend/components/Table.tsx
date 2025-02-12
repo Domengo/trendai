@@ -5,9 +5,9 @@ export default function Table({
   columns,
   renderActions,
 }: {
-  data: any[];
+  data: { [key: string]: string }[];
   columns: string[];
-  renderActions?: (item: any) => React.ReactNode;
+  renderActions?: (item: { [key: string]: string }) => React.ReactNode;
 }) {
   // Helper function to format the date
   const formatDate = (dateString: string) => {
@@ -22,7 +22,10 @@ export default function Table({
   };
 
   // Helper function to render cell content
-  const renderCellContent = (item: any, column: string) => {
+  const renderCellContent = (
+    item: { [key: string]: string },
+    column: string
+  ) => {
     const value = item[column.toLowerCase()];
 
     // Handle dates (e.g., deadline, submissionDate)
@@ -32,8 +35,17 @@ export default function Table({
     ) {
       return formatDate(value);
     }
+
+    // Handle Joined Campaigns
+    if (column.toLowerCase() === "joined campaigns") {
+      if (Array.isArray(value)) {
+        return value.join(", ");
+      }
+      return value;
+    }
+
     if (column === "Actions") {
-      return renderActions ? renderActions(item) : null
+      return renderActions ? renderActions(item) : null;
     }
     // Default case
     return value;
@@ -57,7 +69,7 @@ export default function Table({
           </thead>
           <tbody>
             {data.map((item) => (
-              <tr key={item._id}>
+              <tr key={item["_id"]}>
                 {columns.map((column) => (
                   <td
                     key={column}

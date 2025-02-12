@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
+import { Loader } from "lucide-react";
+import { useQueryClient } from "react-query";
 
 export default function EditCampaignModal({
   isOpen,
@@ -17,6 +19,8 @@ export default function EditCampaignModal({
   const [name, setName] = useState("");
   const [status, setStatus] = useState("active");
   const [deadline, setDeadline] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchCampaign = async () => {
@@ -26,6 +30,7 @@ export default function EditCampaignModal({
         setStatus(response.data.status);
         setDeadline(response.data.deadline);
       } catch (error) {
+        console.error(error);
         toast.error("Failed to fetch campaign. Please try again.");
       }
     };
@@ -34,12 +39,17 @@ export default function EditCampaignModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await api.patch(`/campaigns/${campaignId}`, { name, status, deadline });
       toast.success("Campaign updated successfully!");
+      queryClient.invalidateQueries("campaigns");
       onClose();
     } catch (error) {
+      console.error(error);
       toast.error("Failed to update campaign. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -88,9 +98,17 @@ export default function EditCampaignModal({
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 disabled:opacity-50"
           >
-            Update
+            {isLoading ? (
+              <>
+                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update"
+            )}
           </button>
         </div>
       </form>

@@ -1,11 +1,14 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
+import React from "react";
 import { JSX, useState } from "react";
 
 export default function AuthForm({
   title,
   onSubmit,
+  name,
+  setName,
   email,
   setEmail,
   password,
@@ -20,6 +23,8 @@ export default function AuthForm({
 }: {
   title: string;
   onSubmit: (e: React.FormEvent) => void;
+  name?: string;
+  setName?: (value: string) => void;
   email: string;
   setEmail: (value: string) => void;
   password: string;
@@ -44,8 +49,25 @@ export default function AuthForm({
         </div>
         <form className="mt-8 space-y-6" onSubmit={onSubmit}>
           <div className="rounded-md shadow-sm -space-y-px">
+            {setName && (
+              <div>
+                <label htmlFor="name">Name</label>
+                <input
+                id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm dark:bg-gray-700"
+
+                />
+              </div>
+            )}
             <div>
-              <label htmlFor="email-address" className="sr-only">
+              <label htmlFor="email-address" className="">
                 Email address
               </label>
               <input
@@ -61,7 +83,7 @@ export default function AuthForm({
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="password" className="">
                 Password
               </label>
               <input
@@ -78,7 +100,7 @@ export default function AuthForm({
             </div>
             {confirmPassword !== undefined && setConfirmPassword && (
               <div>
-                <label htmlFor="confirm-password" className="sr-only">
+                <label htmlFor="confirm-password" className="">
                   Confirm Password
                 </label>
                 <input
@@ -122,7 +144,7 @@ export default function AuthForm({
             >
               {buttonIcon && (
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  {buttonIcon}
+                  {typeof buttonIcon === "function" ? React.createElement(buttonIcon) : buttonIcon}
                 </span>
               )}
               {buttonText}

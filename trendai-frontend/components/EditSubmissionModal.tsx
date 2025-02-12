@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
+import { Loader } from "lucide-react";
 
 export default function EditSubmissionModal({
   isOpen,
@@ -15,6 +16,7 @@ export default function EditSubmissionModal({
   submissionId: string;
 }) {
   const [content, setContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchSubmission = async () => {
@@ -22,6 +24,7 @@ export default function EditSubmissionModal({
         const response = await api.get(`/submissions/${submissionId}`);
         setContent(response.data.content);
       } catch (error) {
+        console.error("Error fetching submission:", error);
         toast.error("Failed to fetch submission. Please try again.");
       }
     };
@@ -30,12 +33,16 @@ export default function EditSubmissionModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       await api.patch(`/submissions/${submissionId}`, { content });
       toast.success("Submission updated successfully!");
       onClose();
     } catch (error) {
+      console.error("Error updating submission:", error);
       toast.error("Failed to update submission. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,9 +65,17 @@ export default function EditSubmissionModal({
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            disabled={isLoading}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 disabled:opacity-50"
           >
-            Update
+            {isLoading ? (
+              <>
+                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update"
+            )}
           </button>
         </div>
       </form>

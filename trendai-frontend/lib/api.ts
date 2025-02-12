@@ -18,16 +18,6 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  // (response) => response,
-  // (error) => {
-  //   if (error.response?.status === 401) {
-  //     if (typeof window !== "undefined") {
-  //       localStorage.removeItem("token");
-  //       window.location.href = "/login";
-  //     }
-  //   }
-  //   return Promise.reject(error);
-  // }
   (response) => response,
   (error) => {
     const originalRequest = error.config;
@@ -42,5 +32,10 @@ api.interceptors.response.use(
     return Promise.reject(new Error(errorMessage));
   }
 );
+
+export const getUsers = async () => {
+  const response = await api.get('/auth/users');
+  return response.data;
+};
 
 export default api;
