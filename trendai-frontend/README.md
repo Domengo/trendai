@@ -37,3 +37,7 @@ The frontend for TrendAI platform, built with Next.js, TypeScript, and Tailwind 
 - Tailwind CSS
 - React Query
 - Lucide Icons
+
+## Deployment
+
+Deployed the Frontend to vercel platform accessible through `https://trendai-5jy1.vercel.app/login` .

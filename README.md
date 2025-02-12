@@ -27,7 +27,7 @@ A complete solution for managing influencer marketing campaigns.
 
 ## Getting Started
 
-1. Clone the repository it has both frontend and backend 
+1. Clone the repository it has both frontend and backend
 2. Follow setup instructions in each repository's README
 3. Start both servers
 4. Access the application at `http://localhost:3000`
@@ -37,4 +37,7 @@ A complete solution for managing influencer marketing campaigns.
 - [Frontend Documentation](./trendai-frontend/README.md)
 - [Backend Documentation](./trendai-backend/README.md)
 
-## License
+## Deployment
+
+1. Deployed the Frontend to [vercel](https://vercel.com/) platform accessible through `https://trendai-5jy1.vercel.app/login` .
+2. Deployed the backend to [vercel](https://vercel.com/) platform accessible through `https://trendai-backend-lime.vercel.app` .
