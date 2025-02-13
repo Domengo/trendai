@@ -29,7 +29,10 @@ export default function EditInfluencerModal({
           api.get("/campaigns"),
         ]);
         setName(influencerRes.data.name);
-        setSelectedCampaignIds(influencerRes.data.joinedCampaigns || []);
+        // setSelectedCampaignIds(influencerRes.data.joinedCampaigns || []);
+        setSelectedCampaignIds(
+          influencerRes.data.joinedCampaigns.map((campaign: any) => campaign._id)
+        );
         setCampaigns(campaignsRes.data);
       } catch (error) {
         console.error("Fetching influencer error", error);

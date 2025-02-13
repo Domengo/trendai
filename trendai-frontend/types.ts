@@ -37,3 +37,10 @@ export interface Submission {
     status: string;
     content: string;
 }
+export interface SubmissionTableProps {
+    data: Submission[];
+    onEdit: (submissionId: string) => void;
+    onDelete: (submissionId: string) => void;
+    onApprove: (submissionId: string) => void;
+    onReject: (submissionId: string) => void;
+}
