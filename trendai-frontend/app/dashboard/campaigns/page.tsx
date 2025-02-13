@@ -3,12 +3,12 @@
 import { useQuery } from "react-query";
 import api from "@/lib/api";
 import { Loader, Plus } from "lucide-react";
-import Table from "@/components/Table";
 import toast from "react-hot-toast";
 import CreateCampaignModal from "@/components/CreateCampaignModal";
 import { useState } from "react";
 import EditCampaignModal from "@/components/EditCampaignModal";
 import { useQueryClient } from "react-query";
+import Table from "@/components/CampaignTable";
 
 export default function Campaigns() {
   const {

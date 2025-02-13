@@ -36,22 +36,12 @@ export default function Table({
       return formatDate(value);
     }
 
-    // Handle Joined Campaigns
-    if (column.toLowerCase() === "joined campaigns") {
-      if (Array.isArray(value)) {
-        return value.join(", ");
-      }
-      return value;
-    }
-
     if (column === "Actions") {
       return renderActions ? renderActions(item) : null;
     }
     // Default case
     return value;
   };
-
-  console.log("Table Data:", data);
 
   return (
     <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">

@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
 import { Loader } from "lucide-react";
 import { Campaign } from "@/types";
+import { useQueryClient } from "react-query";
 
 export default function EditInfluencerModal({
   isOpen,
@@ -20,6 +21,7 @@ export default function EditInfluencerModal({
   const [campaigns, setCampaigns] = useState([]);
   const [selectedCampaignIds, setSelectedCampaignIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +33,7 @@ export default function EditInfluencerModal({
         setName(influencerRes.data.name);
         // setSelectedCampaignIds(influencerRes.data.joinedCampaigns || []);
         setSelectedCampaignIds(
-          influencerRes.data.joinedCampaigns.map((campaign: any) => campaign._id)
+          influencerRes.data.joinedCampaigns.map((campaign: { _id: string }) => campaign._id)
         );
         setCampaigns(campaignsRes.data);
       } catch (error) {
@@ -51,6 +53,7 @@ export default function EditInfluencerModal({
         joinedCampaigns: selectedCampaignIds,
       });
       toast.success("Influencer updated successfully!");
+      queryClient.invalidateQueries("influencers");
       onClose();
     } catch (error) {
       console.error("Update influencer error", error);
