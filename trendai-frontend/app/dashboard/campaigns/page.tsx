@@ -2,7 +2,7 @@
 
 import { useQuery } from "react-query";
 import api from "@/lib/api";
-import { Loader, Plus } from "lucide-react";
+import { Loader, Plus, Pen, LucideTrash } from "lucide-react";
 import toast from "react-hot-toast";
 import CreateCampaignModal from "@/components/CreateCampaignModal";
 import { useState } from "react";
@@ -86,15 +86,15 @@ export default function Campaigns() {
                   setSelectedCampaignId(item._id);
                   setIsEditModalOpen(true);
                 }}
-                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 rounded mr-2 "
               >
-                Edit
+                <Pen className="w-4 h-4 mr-2" />
               </button>
               <button
                 onClick={() => handleDeleteCampaign(item._id)}
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded"
               >
-                Delete
+                <LucideTrash className="w-4 h-4 mr-2" />
               </button>
             </>
           )}

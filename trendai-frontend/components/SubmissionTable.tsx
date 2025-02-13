@@ -1,4 +1,5 @@
 "use client";
+import { Pen, LucideTrash } from "lucide-react";
 
 interface Submission {
   _id: string;
@@ -118,13 +119,13 @@ export default function SubmissionTable({
                     onClick={() => onEdit(submission._id)}
                     className="text-blue-500 hover:text-blue-700"
                   >
-                    ✏️
+                    <Pen className="w-4 h-4 mr-2" />
                   </button>
                   <button
                     onClick={() => onDelete(submission._id)}
                     className="text-red-500 hover:text-red-700 ml-2"
                   >
-                    🗑️
+                    <LucideTrash className="w-4 h-4 mr-2"/>
                   </button>
                 </td>
               </tr>
@@ -135,45 +136,3 @@ export default function SubmissionTable({
     </div>
   );
 }
-
-// import SubmissionTable from "@/components/SubmissionTable";
-
-// export default function SubmissionsTable() {
-//   // ... existing code
-
-//   return (
-//     <div className="container mx-auto px-4 sm:px-8">
-//       <div className="py-8">
-//         <div className="flex justify-between">
-//           <h2 className="text-2xl font-semibold leading-tight">Submissions</h2>
-//           <button
-//             onClick={() => setIsCreateModalOpen(true)}
-//             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center"
-//           >
-//             <Plus className="w-4 h-4 mr-2" />
-//             <span>New Submission</span>
-//           </button>
-//         </div>
-//         <SubmissionTable
-//           data={submissions}
-//           onEdit={handleEditSubmission}
-//           onDelete={handleDeleteSubmission}
-//           onApprove={handleApprove}
-//           onReject={handleReject}
-//         />
-//       </div>
-//       <CreateSubmissionModal
-//         isOpen={isCreateModalOpen}
-//         onClose={() => setIsCreateModalOpen(false)}
-//       />
-//       <EditSubmissionModal
-//         isOpen={isEditModalOpen}
-//         onClose={() => {
-//           setIsEditModalOpen(false);
-//           setSelectedSubmissionId(null);
-//         }}
-//         submissionId={selectedSubmissionId || ""}
-//       />
-//     </div>
-//   );
-// }
