@@ -9,6 +9,7 @@ import { useState } from "react";
 import EditCampaignModal from "@/components/EditCampaignModal";
 import { useQueryClient } from "react-query";
 import Table from "@/components/CampaignTable";
+import Tooltip from "@/components/Tooltip";
 
 export default function Campaigns() {
   const {
@@ -38,10 +39,9 @@ export default function Campaigns() {
       toast.success("Campaign deleted successfully!");
       queryClient.invalidateQueries("campaigns");
     } catch (error) {
-      if (error){
+      if (error) {
         toast.error("Failed to delete campaign.");
       }
-      
     }
   };
 
@@ -81,21 +81,25 @@ export default function Campaigns() {
           columns={["Name", "Status", "Deadline", "Actions"]}
           renderActions={(item) => (
             <>
-              <button
-                onClick={() => {
-                  setSelectedCampaignId(item._id);
-                  setIsEditModalOpen(true);
-                }}
-                className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 rounded mr-2 "
-              >
-                <Pen className="w-4 h-4 mr-2" />
-              </button>
-              <button
-                onClick={() => handleDeleteCampaign(item._id)}
-                className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded"
-              >
-                <LucideTrash className="w-4 h-4 mr-2" />
-              </button>
+              <Tooltip text="Edit Campaign">
+                <button
+                  onClick={() => {
+                    setSelectedCampaignId(item._id);
+                    setIsEditModalOpen(true);
+                  }}
+                  className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 rounded mr-2 "
+                >
+                  <Pen className="w-4 h-4 mr-2" />
+                </button>
+              </Tooltip>
+              <Tooltip text="Delete Campaign">
+                <button
+                  onClick={() => handleDeleteCampaign(item._id)}
+                  className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded"
+                >
+                  <LucideTrash className="w-4 h-4 mr-2" />
+                </button>
+              </Tooltip>
             </>
           )}
         />

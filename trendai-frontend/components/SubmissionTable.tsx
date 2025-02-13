@@ -1,5 +1,6 @@
 "use client";
-import { Pen, LucideTrash } from "lucide-react";
+import { Pen, LucideTrash, Check, X } from "lucide-react";
+import Tooltip from "./Tooltip";
 
 interface Submission {
   _id: string;
@@ -99,34 +100,42 @@ export default function SubmissionTable({
                 <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
                   {submission.status === "pending" && (
                     <>
-                      <button
-                        onClick={() => onApprove(submission._id)}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => onReject(submission._id)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Reject
-                      </button>
+                      <Tooltip text="Approve">
+                        <button
+                          onClick={() => onApprove(submission._id)}
+                          className="text-green-500 hover:text-green-700 font-bold py-2 px-4 rounded mr-2"
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
+                      <Tooltip text="Reject">
+                        <button
+                          onClick={() => onReject(submission._id)}
+                          className="text-red-500 hover:text-red-700  font-bold py-2 px-4 rounded"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </Tooltip>
                     </>
                   )}
                 </td>
                 <td className="px-5 py-5 border-b border-gray-200 bg-white dark:bg-gray-700 text-sm">
-                  <button
-                    onClick={() => onEdit(submission._id)}
-                    className="text-blue-500 hover:text-blue-700"
-                  >
-                    <Pen className="w-4 h-4 mr-2" />
-                  </button>
-                  <button
-                    onClick={() => onDelete(submission._id)}
-                    className="text-red-500 hover:text-red-700 ml-2"
-                  >
-                    <LucideTrash className="w-4 h-4 mr-2"/>
-                  </button>
+                  <Tooltip text="Edit">
+                    <button
+                      onClick={() => onEdit(submission._id)}
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      <Pen className="w-4 h-4 mr-2" />
+                    </button>
+                  </Tooltip>
+                  <Tooltip text="Delete">
+                    <button
+                      onClick={() => onDelete(submission._id)}
+                      className="text-red-500 hover:text-red-700 ml-2"
+                    >
+                      <LucideTrash className="w-4 h-4 mr-2" />
+                    </button>
+                  </Tooltip>
                 </td>
               </tr>
             ))}

@@ -9,6 +9,7 @@ import CreateInfluencerModal from "@/components/CreateInfluencerModal";
 import EditInfluencerModal from "@/components/EditInfluencerModal";
 import { useQueryClient } from "react-query";
 import InfluencerTable from "@/components/InfluencerTable";
+import Tooltip from "@/components/Tooltip";
 
 export default function Influencers() {
   const {
@@ -27,7 +28,9 @@ export default function Influencers() {
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
-  const [selectedInfluencerId, setSelectedInfluencerId] = useState<string | null>(null);
+  const [selectedInfluencerId, setSelectedInfluencerId] = useState<
+    string | null
+  >(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleDeleteInfluencer = async (influencerId: string) => {
@@ -36,7 +39,7 @@ export default function Influencers() {
       toast.success("Influencer deleted successfully!");
       queryClient.invalidateQueries("influencers");
     } catch (error) {
-      console.error(error)
+      console.error(error);
       toast.error("Failed to delete influencer.");
     }
   };
@@ -76,21 +79,25 @@ export default function Influencers() {
           data={influencers}
           renderActions={(item) => (
             <>
-              <button
-                onClick={() => {
-                  setSelectedInfluencerId(item._id);
-                  setIsEditModalOpen(true);
-                }}
-                className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 rounded mr-2"
-              >
-                <Pen className="w-4 h-4 mr-2" />
-              </button>
-              <button
-                onClick={() => handleDeleteInfluencer(item._id)}
-                className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded"
-              >
-                <LucideTrash className="w-4 h-4 mr-2" />
-              </button>
+              <Tooltip text="Edit Influencer">
+                <button
+                  onClick={() => {
+                    setSelectedInfluencerId(item._id);
+                    setIsEditModalOpen(true);
+                  }}
+                  className="text-blue-500 hover:text-blue-700 font-bold py-2 px-4 rounded mr-2"
+                >
+                  <Pen className="w-4 h-4 mr-2" />
+                </button>
+              </Tooltip>
+              <Tooltip text="Delete Influencer">
+                <button
+                  onClick={() => handleDeleteInfluencer(item._id)}
+                  className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded"
+                >
+                  <LucideTrash className="w-4 h-4 mr-2" />
+                </button>
+              </Tooltip>
             </>
           )}
         />
