@@ -17,12 +17,14 @@ export default function EditSubmissionModal({
 }) {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState("pending");
 
   useEffect(() => {
     const fetchSubmission = async () => {
       try {
         const response = await api.get(`/submissions/${submissionId}`);
         setContent(response.data.content);
+        setStatus(response.data.status);
       } catch (error) {
         console.error("Error fetching submission:", error);
         toast.error("Failed to fetch submission. Please try again.");
@@ -35,7 +37,7 @@ export default function EditSubmissionModal({
     e.preventDefault();
     setIsLoading(true);
     try {
-      await api.patch(`/submissions/${submissionId}`, { content });
+      await api.patch(`/submissions/${submissionId}`, { content, status });
       toast.success("Submission updated successfully!");
       onClose();
     } catch (error) {
@@ -62,6 +64,21 @@ export default function EditSubmissionModal({
               className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
               required
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Status
+            </label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+              required
+            >
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
           </div>
           <button
             type="submit"

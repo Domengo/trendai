@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { SubmissionsService } from './submissions.service';
 import { Submission } from './submission.schema';
@@ -39,5 +40,18 @@ export class SubmissionsController {
   @Patch(':id/reject')
   async reject(@Param('id') id: string): Promise<Submission | null> {
     return this.submissionsService.updateStatus(id, 'rejected');
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<Submission | null> {
+    return this.submissionsService.delete(id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() submission: Submission,
+  ): Promise<Submission | null> {
+    return this.submissionsService.update(id, submission);
   }
 }

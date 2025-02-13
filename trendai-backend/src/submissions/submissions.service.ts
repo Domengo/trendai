@@ -25,11 +25,11 @@ export class SubmissionsService {
     return newSubmission.save();
   }
 
-  // async update(id: string, submission: Submission): Promise<Submission | null> {
-  //   return this.submissionModel
-  //     .findByIdAndUpdate(id, submission, { new: true })
-  //     .exec();
-  // }
+  async update(id: string, submission: Submission): Promise<Submission | null> {
+    return this.submissionModel
+      .findByIdAndUpdate(id, submission, { new: true })
+      .exec();
+  }
 
   async updateStatus(
     id: string,
@@ -38,5 +38,9 @@ export class SubmissionsService {
     return this.submissionModel
       .findByIdAndUpdate(id, { status }, { new: true })
       .exec();
+  }
+
+  async delete(id: string): Promise<Submission | null> {
+    return this.submissionModel.findByIdAndDelete(id).exec();
   }
 }
