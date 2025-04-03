@@ -1,0 +1,28 @@
+{
+  "name": "Ubuntu 22.04 with Node.js LTS",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers-extra/features/apt-packages:1": {},
+    "ghcr.io/devcontainers-extra/features/vercel-cli:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+
+  "remoteUser": "vscode",
+  "postCreateCommand": "npm install"
+}
