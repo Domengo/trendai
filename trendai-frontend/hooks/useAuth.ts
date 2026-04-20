@@ -49,26 +49,28 @@ export const useAuth = () => {
 
   const login = async (credentials: { email: string; password: string }) => {
     try {
+      console.log("[v0] Attempting login with:", credentials.email);
       const response = await api.post("/auth/login", credentials);
       const { access_token } = response.data;
       localStorage.setItem("token", access_token);
       setToken(access_token);
       toast.success("Logged in successfully!");
       router.push("/dashboard");
-    } catch (error) {
-      console.error("Error logging in:", error);
-      toast.error("Failed to log in. Please try again.");
+    } catch (error: any) {
+      console.error("[v0] Login error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || "Failed to log in. Please try again.");
     }
   };
 
   const register = async (credentials: {name: string, email: string; password: string }) => {
     try {
+      console.log("[v0] Attempting registration with:", credentials.email);
       await api.post("/auth/register", credentials);
       toast.success("Registered successfully! Please log in.");
       router.push("/login");
-    } catch (error) {
-      console.error("Error registering:", error);
-      toast.error("Failed to register. Please try again.");
+    } catch (error: any) {
+      console.error("[v0] Registration error:", error.response?.data || error.message);
+      toast.error(error.response?.data?.message || "Failed to register. Please try again.");
     }
   };
 
