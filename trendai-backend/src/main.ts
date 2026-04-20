@@ -9,6 +9,7 @@ async function bootstrap() {
   const allowedOrigins = [
     'https://trendai-5jy1.vercel.app',
     'http://localhost:3000',
+    'https://vm-7if13abu8gh51zbx70nayjde.vusercontent.net'
   ];
 
   const config = new DocumentBuilder()
@@ -47,10 +48,7 @@ async function bootstrap() {
     logger.error(`Uncaught Exception: ${error.message}`);
   });
 
-  // await app.listen(process.env.PORT ?? 3000);
-  await app.init()
-  const instance = app.getHttpAdapter().getInstance();
-  return instance(req, res);
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap().catch((error: Error) => {
   Logger.error(`Error starting server: ${error.message}`);
