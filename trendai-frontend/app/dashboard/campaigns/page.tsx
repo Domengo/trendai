@@ -19,10 +19,11 @@ export default function Campaigns() {
   } = useQuery({
     queryKey: ["campaigns"],
     queryFn: () => api.get("/campaigns").then((res) => res.data),
-    onError: () => {
-      toast.error("Failed to load campaigns. Please try again.");
-    },
   });
+
+  if (error) {
+    toast.error("Failed to load campaigns. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();

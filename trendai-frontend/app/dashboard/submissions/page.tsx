@@ -18,10 +18,11 @@ export default function SubmissionsTable() {
   } = useQuery({
     queryKey: ["submissions"],
     queryFn: () => api.get("/submissions").then((res) => res.data),
-    onError: () => {
-      toast.error("Failed to load submissions. Please try again.");
-    },
   });
+
+  if (error) {
+    toast.error("Failed to load submissions. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();

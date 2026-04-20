@@ -19,10 +19,11 @@ export default function Influencers() {
   } = useQuery({
     queryKey: ["influencers"],
     queryFn: () => api.get("/influencers").then((res) => res.data),
-    onError: () => {
-      toast.error("Failed to load influencers. Please try again.");
-    },
   });
+
+  if (error) {
+    toast.error("Failed to load influencers. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
