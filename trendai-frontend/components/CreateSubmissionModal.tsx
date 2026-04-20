@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { Campaign, Influencer } from "@/types";
 
@@ -51,7 +51,7 @@ export default function CreateSubmissionModal({
         status,
       });
       toast.success("Submission created successfully!");
-      queryClient.invalidateQueries("submissions");
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
       onClose();
     } catch (error) {
       console.error(error);

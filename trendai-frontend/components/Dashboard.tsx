@@ -1,21 +1,24 @@
 "use client";
 
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Loader } from "lucide-react";
 
 const Dashboard = () => {
-  const { data: campaigns, isLoading: campaignsLoading } = useQuery("campaigns", () =>
-    api.get("/campaigns").then((res) => res.data),
-  );
+  const { data: campaigns, isLoading: campaignsLoading } = useQuery({
+    queryKey: ["campaigns"],
+    queryFn: () => api.get("/campaigns").then((res) => res.data),
+  });
 
-  const { data: influencers, isLoading: influencersLoading } = useQuery("influencers", () =>
-    api.get("/influencers").then((res) => res.data),
-  );
+  const { data: influencers, isLoading: influencersLoading } = useQuery({
+    queryKey: ["influencers"],
+    queryFn: () => api.get("/influencers").then((res) => res.data),
+  });
 
-  const { data: submissions, isLoading: submissionsLoading } = useQuery("submissions", () =>
-    api.get("/submissions").then((res) => res.data),
-  );
+  const { data: submissions, isLoading: submissionsLoading } = useQuery({
+    queryKey: ["submissions"],
+    queryFn: () => api.get("/submissions").then((res) => res.data),
+  });
 
   if (campaignsLoading || influencersLoading || submissionsLoading) {
     return (

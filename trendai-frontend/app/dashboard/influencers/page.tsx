@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Loader, Plus, Pen, LucideTrash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateInfluencerModal from "@/components/CreateInfluencerModal";
 import EditInfluencerModal from "@/components/EditInfluencerModal";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import InfluencerTable from "@/components/InfluencerTable";
 import Tooltip from "@/components/Tooltip";
 
@@ -16,15 +16,14 @@ export default function Influencers() {
     data: influencers,
     isLoading,
     error,
-  } = useQuery(
-    "influencers",
-    () => api.get("/influencers").then((res) => res.data),
-    {
-      onError: () => {
-        toast.error("Failed to load influencers. Please try again.");
-      },
-    }
-  );
+  } = useQuery({
+    queryKey: ["influencers"],
+    queryFn: () => api.get("/influencers").then((res) => res.data),
+  });
+
+  if (error) {
+    toast.error("Failed to load influencers. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -37,7 +36,7 @@ export default function Influencers() {
     try {
       await api.delete(`/influencers/${influencerId}`);
       toast.success("Influencer deleted successfully!");
-      queryClient.invalidateQueries("influencers");
+      queryClient.invalidateQueries({ queryKey: ["influencers"] });
     } catch (error) {
       console.error(error);
       toast.error("Failed to delete influencer.");

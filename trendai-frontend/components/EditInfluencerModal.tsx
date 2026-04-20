@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
 import { Loader } from "lucide-react";
 import { Campaign } from "@/types";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditInfluencerModal({
   isOpen,
@@ -53,7 +53,7 @@ export default function EditInfluencerModal({
         joinedCampaigns: selectedCampaignIds,
       });
       toast.success("Influencer updated successfully!");
-      queryClient.invalidateQueries("influencers");
+      queryClient.invalidateQueries({ queryKey: ["influencers"] });
       onClose();
     } catch (error) {
       console.error("Update influencer error", error);

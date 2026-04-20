@@ -1,13 +1,13 @@
 "use client";
 
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Loader, Plus, Pen, LucideTrash } from "lucide-react";
 import toast from "react-hot-toast";
 import CreateCampaignModal from "@/components/CreateCampaignModal";
 import { useState } from "react";
 import EditCampaignModal from "@/components/EditCampaignModal";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import Table from "@/components/CampaignTable";
 import Tooltip from "@/components/Tooltip";
 
@@ -16,15 +16,14 @@ export default function Campaigns() {
     data: campaigns,
     isLoading,
     error,
-  } = useQuery(
-    "campaigns",
-    () => api.get("/campaigns").then((res) => res.data),
-    {
-      onError: () => {
-        toast.error("Failed to load campaigns. Please try again.");
-      },
-    }
-  );
+  } = useQuery({
+    queryKey: ["campaigns"],
+    queryFn: () => api.get("/campaigns").then((res) => res.data),
+  });
+
+  if (error) {
+    toast.error("Failed to load campaigns. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -37,7 +36,7 @@ export default function Campaigns() {
     try {
       await api.delete(`/campaigns/${campaignId}`);
       toast.success("Campaign deleted successfully!");
-      queryClient.invalidateQueries("campaigns");
+      queryClient.invalidateQueries({ queryKey: ["campaigns"] });
     } catch (error) {
       if (error) {
         toast.error("Failed to delete campaign.");

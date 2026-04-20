@@ -1,12 +1,12 @@
 "use client";
 
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { Loader, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import CreateSubmissionModal from "@/components/CreateSubmissionModal";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import EditSubmissionModal from "@/components/EditSubmissionModal";
 import SubmissionTable from "@/components/SubmissionTable";
 
@@ -15,15 +15,14 @@ export default function SubmissionsTable() {
     data: submissions,
     isLoading,
     error,
-  } = useQuery(
-    "submissions",
-    () => api.get("/submissions").then((res) => res.data),
-    {
-      onError: () => {
-        toast.error("Failed to load submissions. Please try again.");
-      },
-    }
-  );
+  } = useQuery({
+    queryKey: ["submissions"],
+    queryFn: () => api.get("/submissions").then((res) => res.data),
+  });
+
+  if (error) {
+    toast.error("Failed to load submissions. Please try again.");
+  }
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -41,7 +40,7 @@ export default function SubmissionsTable() {
     try {
       await api.delete(`/submissions/${submissionId}`);
       toast.success("Submission deleted!");
-      queryClient.invalidateQueries("submissions");
+      queryClient.invalidateQueries({ queryKey: ["submissions"] });
     } catch (error) {
       if (error) {
         toast.error("Deletion failed");
@@ -71,7 +70,7 @@ export default function SubmissionsTable() {
     try {
       await api.patch(`/submissions/${submissionId}/approve`);
       toast.success("Submission approved!");
-      queryClient.invalidateQueries("submissions"); // Refresh the table
+      queryClient.invalidateQueries({ queryKey: ["submissions"] }); // Refresh the table
     } catch (error) {
       if (error) {
         toast.error("Failed to approve submission. Please try again.");
@@ -83,7 +82,7 @@ export default function SubmissionsTable() {
     try {
       await api.patch(`/submissions/${submissionId}/reject`);
       toast.success("Submission rejected!");
-      queryClient.invalidateQueries("submissions"); // Refresh the table
+      queryClient.invalidateQueries({ queryKey: ["submissions"] }); // Refresh the table
     } catch (error) {
       if (error) {
         toast.error("Failed to reject submission. Please try again.");
