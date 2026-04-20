@@ -5,7 +5,7 @@ import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
 import { Loader } from "lucide-react";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function EditCampaignModal({
   isOpen,
@@ -43,7 +43,7 @@ export default function EditCampaignModal({
     try {
       await api.patch(`/campaigns/${campaignId}`, { name, status, deadline });
       toast.success("Campaign updated successfully!");
-      queryClient.invalidateQueries("campaigns");
+      queryClient.invalidateQueries({ queryKey: ["campaigns"] });
       onClose();
     } catch (error) {
       console.error(error);

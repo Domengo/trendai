@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import api from "@/lib/api";
 import toast from "react-hot-toast";
 import Modal from "@/components/Modal";
-import { useQueryClient } from "react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
 import { User, Campaign } from "@/types";
 
@@ -59,7 +59,7 @@ export default function CreateInfluencerModal({
         joinedCampaigns: selectedCampaigns,
       });
       toast.success("Influencer created successfully!");
-      queryClient.invalidateQueries("influencers");
+      queryClient.invalidateQueries({ queryKey: ["influencers"] });
       onClose();
     } catch (error) {
       console.error("error creating influencer", error);
