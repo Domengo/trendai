@@ -47,7 +47,10 @@ async function bootstrap() {
     logger.error(`Uncaught Exception: ${error.message}`);
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  // await app.listen(process.env.PORT ?? 3000);
+  await app.init()
+  const instance = app.getHttpAdapter().getInstance();
+  return instance(req, res);
 }
 bootstrap().catch((error: Error) => {
   Logger.error(`Error starting server: ${error.message}`);
