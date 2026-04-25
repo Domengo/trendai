@@ -1,4 +1,4 @@
-# TrendAI Backend API
+ front # TrendAI Backend API
 
 This is the backend API for the TrendAI platform, built with **Nest.js**, **MongoDB**, and **JWT-based authentication**. It provides endpoints for managing campaigns, influencers, submissions, and user authentication.
 
