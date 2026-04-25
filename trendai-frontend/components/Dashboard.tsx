@@ -5,17 +5,17 @@ import api from "@/lib/api";
 import { Loader } from "lucide-react";
 
 const Dashboard = () => {
-  const { data: campaigns, isLoading: campaignsLoading } = useQuery({
+  const { data: campaigns, isLoading: campaignsLoading, error: campaignsError } = useQuery({
     queryKey: ["campaigns"],
     queryFn: () => api.get("/campaigns").then((res) => res.data),
   });
 
-  const { data: influencers, isLoading: influencersLoading } = useQuery({
+  const { data: influencers, isLoading: influencersLoading, error: influencersError } = useQuery({
     queryKey: ["influencers"],
     queryFn: () => api.get("/influencers").then((res) => res.data),
   });
 
-  const { data: submissions, isLoading: submissionsLoading } = useQuery({
+  const { data: submissions, isLoading: submissionsLoading, error: submissionsError } = useQuery({
     queryKey: ["submissions"],
     queryFn: () => api.get("/submissions").then((res) => res.data),
   });
@@ -24,6 +24,19 @@ const Dashboard = () => {
     return (
       <div className="flex items-center justify-center h-full">
         <Loader className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  // Handle errors
+  if (campaignsError || influencersError || submissionsError) {
+    console.error("[v0] Dashboard error - campaigns:", campaignsError, "influencers:", influencersError, "submissions:", submissionsError);
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center">
+          <p className="text-red-500 mb-2">Error loading dashboard data</p>
+          <p className="text-sm text-gray-600">Please refresh the page or try again later</p>
+        </div>
       </div>
     );
   }
