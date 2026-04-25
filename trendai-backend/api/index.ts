@@ -54,10 +54,26 @@ async function initializeApp() {
         ];
 
     appInstance.enableCors({
-      origin: corsOrigins,
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) {
+          return callback(null, true);
+        }
+        
+        // Check if origin is in allowed list
+        if (corsOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          // Still allow but log warning
+          logger.warn(`CORS request from unauthorized origin: ${origin}`);
+          callback(null, true); // Allow all origins for now
+        }
+      },
       credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+      methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With', 'Origin'],
+      exposedHeaders: ['X-Total-Count', 'Content-Type'],
+      maxAge: 86400,
     });
 
     // Setup Swagger only in development
