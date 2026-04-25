@@ -43,10 +43,19 @@ async function initializeApp() {
 
     appInstance = await NestFactory.create(AppModule, nestOptions);
 
-    // Enable CORS for all origins
+    // Enable CORS with proper credential handling
+    const corsOrigins = process.env.CORS_ORIGINS 
+      ? process.env.CORS_ORIGINS.split(',')
+      : [
+          'http://localhost:3000',
+          'http://localhost:3001',
+          'https://trendai-5jy1.vercel.app',
+          'https://trendai-frontend.vercel.app',
+        ];
+
     appInstance.enableCors({
-      origin: '*',
-      credentials: false,
+      origin: corsOrigins,
+      credentials: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
     });

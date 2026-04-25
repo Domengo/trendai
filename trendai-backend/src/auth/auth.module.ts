@@ -15,10 +15,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') },
-      }),
+      useFactory: (configService: ConfigService) => {
+        // Convert JWT_EXPIRES_IN to seconds if needed
+        const expiresIn = configService.get<string>('JWT_EXPIRES_IN') || '7d';
+        
+        return {
+          secret: configService.get<string>('JWT_SECRET'),
+          signOptions: { 
+            expiresIn: expiresIn, // "7d", "24h", "604800" all work with jsonwebtoken
+          },
+        };
+      },
       inject: [ConfigService],
     }),
   ],
