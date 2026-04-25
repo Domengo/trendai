@@ -67,7 +67,7 @@ curl -X GET http://localhost:3000/
 
 ### 2. Register New User (Create Account)
 ```bash
-curl -X POST http://localhost:3000/auth/register \
+curl -X POST https://trendai-backend-lime.vercel.app \
   -H "Content-Type: application/json" \
   -d '{
     "email": "testuser@example.com",
