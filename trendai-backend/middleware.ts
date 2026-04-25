@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+// import { NextResponse } from 'next/server';
+// import type { NextRequest } from 'next/server';
 
 const ALLOWED_ORIGINS = [
   'https://trendai-5jy1.vercel.app',
-  'https://trendai-backend-lime.vercel.app',
+  'https://vm-70twtesb54ghebzf6d3ln6kb.vusercontent.net',
   'http://localhost:3000',
   'http://localhost:3001',
 ];
