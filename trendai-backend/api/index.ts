@@ -50,7 +50,7 @@ async function initializeApp() {
           'http://localhost:3000',
           'http://localhost:3001',
           'https://trendai-5jy1.vercel.app',
-          'https://trendai-frontend.vercel.app',
+          'https://vm-6noh7txi1cfp1bpv8xjs4udo.vusercontent.net',
         ];
 
     appInstance.enableCors({
