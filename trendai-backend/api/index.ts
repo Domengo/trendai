@@ -43,12 +43,37 @@ async function initializeApp() {
 
     appInstance = await NestFactory.create(AppModule, nestOptions);
 
-    // Enable CORS for all origins
+    // Enable CORS with proper credential handling
+    const corsOrigins = process.env.CORS_ORIGINS 
+      ? process.env.CORS_ORIGINS.split(',')
+      : [
+          'http://localhost:3000',
+          'http://localhost:3001',
+          'https://trendai-5jy1.vercel.app',
+          'https://vm-6noh7txi1cfp1bpv8xjs4udo.vusercontent.net',
+        ];
+
     appInstance.enableCors({
-      origin: '*',
-      credentials: false,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+      origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) {
+          return callback(null, true);
+        }
+        
+        // Check if origin is in allowed list
+        if (corsOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          // Still allow but log warning
+          logger.warn(`CORS request from unauthorized origin: ${origin}`);
+          callback(null, true); // Allow all origins for now
+        }
+      },
+      credentials: true,
+      methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With', 'Origin'],
+      exposedHeaders: ['X-Total-Count', 'Content-Type'],
+      maxAge: 86400,
     });
 
     // Setup Swagger only in development

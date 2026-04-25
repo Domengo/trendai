@@ -41,9 +41,16 @@ export class AuthService {
   async login(user: Partial<User>): Promise<{ access_token: string }> {
     const payload = { email: user.email, sub: user._id };
     await Promise.resolve();
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    
+    try {
+      const token = this.jwtService.sign(payload);
+      return {
+        access_token: token,
+      };
+    } catch (error) {
+      console.error('[v0] JWT Sign Error:', error);
+      throw new Error('Failed to generate authentication token. Check JWT_SECRET environment variable.');
+    }
   }
 
   async findAllUsers(): Promise<User[]> {
